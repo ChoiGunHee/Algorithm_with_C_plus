@@ -1,5 +1,5 @@
 /**
-* 2021. 06. 25
+* 2021. 06. 26
 * Creater : Gunhee Choi
 * Problem Number : 4344
 * Title : 평균은 넘겠지
