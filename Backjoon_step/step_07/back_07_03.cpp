@@ -17,32 +17,30 @@
 using namespace std;
 
 int main() {
-	char arr[101];
+	string arr;
 	int results[26];
 	int arr_count;
 	int i, i_char;
 	
-	scanf("%s", arr);
-	arr_count = strlen(arr);
+	cin >> arr;
+	arr_count = arr.size();
 	
 	//init
 	for(i=0; i<26; i++)
 		results[i] = -1;
 	
 	for(i=0; i<arr_count; i++) {
-		i_char = arr[i] - 'a';
+		i_char = arr.at(i) - 'a';
 		
 		if(results[i_char] == -1)
 			results[i_char] = i;
 	}
 	
 	//print
-	for(i=0; i<26; i++) {
-		printf("%d ", results[i]);	
-	}
-	
-	printf("\n");
+	for(i=0; i<26; i++)
+        cout << results[i] << " ";
+    
+    cout<<endl;
 	
 	return 0;
 }
-© 2021 GitHub, Inc.
