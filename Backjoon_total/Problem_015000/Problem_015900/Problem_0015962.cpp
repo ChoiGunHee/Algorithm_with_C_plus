@@ -1,8 +1,8 @@
 /**
-* 2021. 09. 05
+* 2021. 09. 06
 * Creater : Gunhee Choi
-* Problem Number : 7576
-* Title : 토마토
+* Problem Number : 15962
+* Title : 새로운 시작
 
 * Problem :
 부산일과학고등학교는 태어난지 얼마 안 된 킹-갓 과학고등학교다. 우리들을 위해 응원의 한마디를 출력하자.
