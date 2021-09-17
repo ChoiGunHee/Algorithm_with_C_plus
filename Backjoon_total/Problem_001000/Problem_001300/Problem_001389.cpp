@@ -1,7 +1,7 @@
 /**
-* 2021. 09. 12
+* 2021. 09. 17
 * Creater : Gunhee Choi
-* Problem Number : 1021
+* Problem Number : 1389
 * Title : 케빈 베이컨의 6단계 법칙
 
 * Problem :
@@ -49,53 +49,56 @@ BOJ 유저의 수와 친구 관계가 입력으로 주어졌을 때, 케빈 베�
 **/
 
 #include <iostream>
+#include <algorithm>
+#define INF 99999999
+#define MAX_NUM 101
 using namespace std;
+
+int dis[MAX_NUM][MAX_NUM];
 
 int main() {
     int N, M;
-    deque<int> dq;
-    int find_num;
-    int i_find;
-    int result=0;
     
     cin>>N>>M;
+    
     for(int i=1; i<=N; i++)
-        dq.push_back(i);
+        for(int j=1; j<=N; j++)
+            if(i==j)
+                dis[i][j]=0;
+            else
+                dis[i][j]=INF;
     
-    while(M--) {
-        cin>>find_num;
-        for(int i=0; i<dq.size(); i++) {
-            if(dq[i]==find_num) {
-                i_find = i;
-                break;
-            }
-        }
-        
-        if(i_find<dq.size()-i_find) {
-            while(1) {
-                if(dq.front()==find_num) {
-                    dq.pop_front();
-                    break;
-                }
-                result++;
-                dq.push_back(dq.front());
-                dq.pop_front();
-            }
-        } else {
-            while(1) {
-                if(dq.front()==find_num) {
-                    dq.pop_front();
-                    break;
-                }
-                result++;
-                dq.push_front(dq.back());
-                dq.pop_back();
-            }
-        }
-        
-    }//end of while(M--)
+    for(int i=0; i<M; i++) {
+        int start, end;
+        cin>>start>>end;
+        dis[start][end]=1;
+        dis[end][start]=1;
+    }
     
-    cout<<result<<endl;
+    for(int k=1; k<=N; k++)
+        for(int i=1; i<=N; i++)
+            for(int j=1; j<=N; j++)
+                dis[i][j]=min(dis[i][k]+dis[k][j], dis[i][j]);
+
+    
+    int ans_list[MAX_NUM];
+    int min_ans=INF;
+    
+    for(int i=1; i<=N; i++) {
+        int sum=0;
+        for(int j=1; j<=N; j++)
+            sum+=dis[i][j];
+        
+        ans_list[i]=sum;
+        if(sum<min_ans)
+            min_ans=sum;
+    }
+    
+    for(int i=1; i<=N; i++)
+        if(ans_list[i]==min_ans) {
+            cout<<i<<"\n";
+            break;
+        }
     
 	return 0;
 }
