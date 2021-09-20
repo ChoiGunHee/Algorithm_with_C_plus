@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX_LEN 1000001
+
+int main() {
+	int num1, num2;
+	int reverse1 = 0, reverse2 = 0;
+	int ten = 100;
+	int i;
+	
+	scanf("%d %d", &num1, &num2);
+	
+	for(i=0; i<3; i++) {
+		reverse1 += num1%10 * ten;
+		reverse2 += num2%10 * ten;
+		
+		num1 = num1/10;
+		num2 = num2/10;
+		ten = ten/10;
+	}
+	
+	printf("%d\n", reverse1 > reverse2 ? reverse1 : reverse2);
+
+	return 0;
+}
