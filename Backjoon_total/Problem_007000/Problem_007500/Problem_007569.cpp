@@ -1,5 +1,5 @@
 /**
-* 2021. 09. 19
+* 2021. 09. 22
 * Creater : Gunhee Choi
 * Problem Number : 7569
 * Title : 토마토
@@ -16,15 +16,18 @@
 
 토마토가 하나 이상 있는 경우만 입력으로 주어진다.
 
-    5 3 1
-    0 -1 0 0 0
-    -1 -1 0 1 1
-    0 0 0 1 1
+    5 3 2
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 1 0 0
+    0 0 0 0 0
 	
 * Output :
 여러분은 토마토가 모두 익을 때까지 최소 며칠이 걸리는지를 계산해서 출력해야 한다. 만약, 저장될 때부터 모든 토마토가 익어있는 상태이면 0을 출력해야 하고, 토마토가 모두 익지는 못하는 상황이면 -1을 출력해야 한다.
 	
-    -1
+    4
 
 **/
 
@@ -32,26 +35,29 @@
 #include <queue>
 #include <string>
 
-#define MAX_NUM 1001
+#define MAX_NUM 101
 
 using namespace std;
 
 typedef struct Point {
-    int y;
     int x;
+    int y;
     int z;
+    int count;
 } Point;
 
 queue<Point> q;
-int tomato_map[MAX_NUM][MAX_NUM];
-int n=0, m=0;
+int tomato_map[MAX_NUM][MAX_NUM][MAX_NUM];
+bool visited[MAX_NUM][MAX_NUM][MAX_NUM];
+int n=0, m=0, h=0;
+int result;
 
-int dx[4]={1, 0, -1, 0, 0, 0};
-int dy[4]={0, 1, 0, -1, 0 ,0};
-int dz[4]={0, 0, 0, 0, 1 ,-1};
+int dx[6]={1, 0, -1, 0, 0, 0};
+int dy[6]={0, 1, 0, -1, 0 ,0};
+int dz[6]={0, 0, 0, 0, 1 ,-1};
 
 bool check_inside(int x, int y, int z) {
-    return (x>=0 && y>=0 && x<m && y<n);
+    return (x >= 0 && y >= 0 && z >= 0 && x < n && y < m && z < h );
 }
 
 void bfs(void) {
@@ -59,6 +65,9 @@ void bfs(void) {
         int x = q.front().x;
         int y = q.front().y;
         int z = q.front().z;
+        int tmp_result=q.front().count;
+        result=max(result, tmp_result);
+        //cout<<"result : "<<result<<"\n";
         q.pop();
         
         for(int i=0; i<6; i++) {
@@ -66,42 +75,49 @@ void bfs(void) {
             int ny = y + dy[i];
             int nz = z + dz[i];
             
-            if(check_inside(nx, ny, nz)==1 && tomato_map[ny][nx][nz]==0) {
-                tomato_map[ny][nx][nz] = tomato_map[y][x][z] + 1;
-                q.push({ny, nx});
+            if(check_inside(nx, ny, nz)==1 && !visited[nx][ny][nz]) {
+                q.push({nx, ny, nz, tmp_result+1});
+                visited[nx][ny][nz]=true;
+                //cout<<nx<<" "<<ny<<" "<<nz<<"\n";
             }
         }//end of for
     }// end of while
 }
 
-int main(void) {
-    int result=0;
+int main(void) {   
+    ios_base::sync_with_stdio(0);
+	cin.tie(0);
+    cout.tie(0);
     
-    scanf("%d %d", &m, &n);
+    cin>>m>>n>>h;
     
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<m; j++) {
-            scanf("%d", &tomato_map[i][j]);
-            if(tomato_map[i][j]==1)
-                q.push({i,j});
-        }
+    for (int k=0; k<h; k++)
+        for (int i=0; i<n; i++)
+                for (int j=0; j<m; j++) {
+                        cin>>tomato_map[i][j][k];
+                        if (tomato_map[i][j][k] == 1) {
+                                q.push({i, j, k, 0});
+                                visited[i][j][k] = true;
+                        }
+                        else if (tomato_map[i][j][k] == -1)
+                                visited[i][j][k] = true;
+                }
+    if(q.empty()) {
+        cout<<-1<<"\n";
+        return 0;
     }
     
     bfs();
     
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<m; j++) {
-            if(tomato_map[i][j]==0) {
-                printf("-1\n");
-                return 0;
-            }
-            
-            if(result<tomato_map[i][j])
-                result = tomato_map[i][j];
-        }
-    }
+    for (int i=0; i<n; i++)
+            for (int j=0; j<m; j++)
+                    for(int k=0; k<h; k++) 
+                            if (!visited[i][j][k]) {
+                                    cout<<-1<<"\n";
+                                    return 0;
+                            }
     
-    printf("%d\n", result-1);
+    cout<<result<<"\n";
     
     return 0;
 }
