@@ -75,7 +75,8 @@ int main() {
         for(int i; i<dq_str.length(); i++) {
             if(dq_str[i]=='[')
                 continue;
-            else if(dq_str[i]>='0' && dq_str[i]<='9') {
+            
+            if(dq_str[i]>='0' && dq_str[i]<='9') {
                 tmp_num[num_count++]=dq_str[i]-'0';
             } else {
                 int tmp=0;
@@ -95,7 +96,6 @@ int main() {
                 num_count=0;
             }
         }//end of for i
-        
         
         for(int i=0; i<n; i++) {
             int tmp = dq.front();
