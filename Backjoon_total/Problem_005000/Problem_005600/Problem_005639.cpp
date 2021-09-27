@@ -1,8 +1,8 @@
 /**
 * 2021. 09. 26
 * Creater : Gunhee Choi
-* Problem Number : 2448
-* Title : 별 찍기 - 11
+* Problem Number : 5639
+* Title : 이진 검색 트리
 
 * Problem :
 이진 검색 트리는 다음과 같은 세 가지 조건을 만족하는 이진 트리이다.
