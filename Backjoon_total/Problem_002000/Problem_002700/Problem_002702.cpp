@@ -1,5 +1,5 @@
 /**
-* 2021. 09. 39
+* 2021. 09. 29
 * Creater : Gunhee Choi
 * Problem Number : 2702
 * Title : 초6 수학
