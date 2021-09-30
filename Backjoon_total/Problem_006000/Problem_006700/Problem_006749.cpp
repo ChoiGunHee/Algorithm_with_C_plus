@@ -1,5 +1,5 @@
 /**
-* 2021. 10. 07
+* 2021. 09. 30
 * Creater : Gunhee Choi
 * Problem Number : 6749
 * Title : Next in line
